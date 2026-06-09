@@ -2,6 +2,17 @@
 
 pragma solidity ^0.8.26;
 
+// A decentralized voting smart contract
+
+// Features:
+// - Candidate Registration
+// - Voter Registration
+// - Voting System
+// - Voting Timer
+// - Emergency Stop
+// - Winner Announcement
+
+
 contract Vote {
 
     //first entity
@@ -68,6 +79,7 @@ contract Vote {
         _;
     }
 
+    // Register a new candidate
     function registerCandidate(
         string calldata _name,
         string calldata _party,
@@ -119,6 +131,7 @@ contract Vote {
         return true;
     }
    
+    // Register a new voter
     function registerVoter(
         string calldata _name,
         uint _age,
@@ -147,6 +160,7 @@ contract Vote {
        return voterList;
     }
 
+    // Cast vote to a candidate
     function castVote(uint _voterId, uint _candidateId) external isVotingOver(){
         require(block.timestamp >= startTime, "Voting has not started yet");
         require(voterDetails[_voterId].voteCandidateId==0,"You have already voted");
@@ -173,6 +187,7 @@ contract Vote {
         }
     }
 
+    // Announces the election winner
     function announceVotingResult() external onlyCommissioner() {
       uint max=0;
       for(uint i=1;i<nextCandidateId;i++){
